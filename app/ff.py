@@ -3,7 +3,7 @@ url = "https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/g
 
 querystring = {"week":"season","archiveSeason":"2024","twoPointConversions":"2","passYards":".04","passAttempts":"-.5","passTD":"4","passCompletions":"1","passInterceptions":"-2","pointsPerReception":"1","carries":".2","rushYards":".1","rushTD":"6","fumbles":"-2","receivingYards":".1","receivingTD":"6","targets":".1","fgMade":"3","fgMissed":"-1","xpMade":"1","xpMissed":"-1"}
 
-
+import requests
 from app.alpha_service import x_rapidapi_key
 from app.alpha_service import x_rapidapi_host
 
