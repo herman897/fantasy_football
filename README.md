@@ -19,3 +19,14 @@ Install packages:
 pip install -r requirements.txt
 ```
 
+## Usage 
+
+Run the ff report:
+
+```sh
+#python app/ff.py
+
+python -m app.ff
+```
+
+
