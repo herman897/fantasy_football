@@ -1,16 +1,17 @@
-#update with file from ff and ff function 
+#this is the "test/ff_test.py" file...
 
-from pandas import DataFrame
+from app.ff import fetch_ff_json
 
-from app.stocks import fetch_stocks_csv
+def test_ff_data_fetching():
 
-def test_stock_data_fetching():
+    data = fetch_ff_json(1)
+    assert isinstance(data,dict)
+    assert len(data['body']['teamDefenseProjections']) == 32
+    assert len(data['body']['playerProjections']) > 300
 
-    df = fetch_stocks_csv("SPOT")
-    assert isinstance(df, DataFrame)
-    assert df.columns.tolist() == ["timestamp", "open", "high", "low", "close", "adjusted_close", "volume", "dividend_amount", "split_coefficient"]
-    assert len(df) > 1500
+    players = data['body']['playerProjections']
+    assert isinstance(players,dict)
 
-    earliest = df.iloc[-1]
-    assert earliest["timestamp"] == '2018-04-03'
-    assert earliest["adjusted_close"] == 149.01
+    teams = data['body']['teamDefenseProjections']
+    assert isinstance(teams,dict)
+    

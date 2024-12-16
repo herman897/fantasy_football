@@ -5,7 +5,7 @@ from app.alpha_service import x_rapidapi_key
 from app.alpha_service import x_rapidapi_host
 
 
-def fetch_ff_json():
+def fetch_ff_json(week_number):
     request_url = url = "https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLProjections"
     querystring = {"week":week_number,"archiveSeason":"2024","twoPointConversions":"2","passYards":".04","passAttempts":"-.5","passTD":"4","passCompletions":"1","passInterceptions":"-2","pointsPerReception":"1","carries":".2","rushYards":".1","rushTD":"6","fumbles":"-2","receivingYards":".1","receivingTD":"6","targets":".1","fgMade":"3","fgMissed":"-1","xpMade":"1","xpMissed":"-1"}
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     player_1 = input("Who is the first player you would like to compare?")
     player_2 = input("Who is the second player you would like to compare?")
 
-    data = fetch_ff_json()
+    data = fetch_ff_json(week_number)
 
     players = data['body']['playerProjections']
 
