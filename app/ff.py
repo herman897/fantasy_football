@@ -1,20 +1,14 @@
 # this is the "web_app/routes/ff.py" file ...
 
-import requests
-from app.alpha_service import x_rapidapi_key
-from app.alpha_service import x_rapidapi_host
+import requests 
+from app.tank01_service import BASE_URL,HEADERS
 
 
 def fetch_ff_json(week_number):
-    request_url = url = "https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLProjections"
-    querystring = {"week":week_number,"archiveSeason":"2024","twoPointConversions":"2","passYards":".04","passAttempts":"-.5","passTD":"4","passCompletions":"1","passInterceptions":"-2","pointsPerReception":"1","carries":".2","rushYards":".1","rushTD":"6","fumbles":"-2","receivingYards":".1","receivingTD":"6","targets":".1","fgMade":"3","fgMissed":"-1","xpMade":"1","xpMissed":"-1"}
+    url = f"{BASE_URL}/getNFLProjections"
+    querystring = {"week":week_number,"archiveSeason":"2024"}
 
-    headers = {
-	"x-rapidapi-key": x_rapidapi_key,
-	"x-rapidapi-host": x_rapidapi_host
-    }
-
-    response = requests.get(url, headers=headers, params=querystring)
+    response = requests.get(url, headers=HEADERS, params=querystring)
 
     data = response.json()
 
@@ -31,9 +25,17 @@ def filter_players_by_names(players, names_to_find):
 
 if __name__ == "__main__":
     
-    week_number = input("which week would you like projected stats for?")
-    player_1 = input("Who is the first player you would like to compare?")
-    player_2 = input("Who is the second player you would like to compare?")
+    week_number = input("Enter week number for comparison (or enter anything for full 2024 season projections): ")
+    
+    scoring_format=""
+    options=['standard','PPR', 'halfPPR']
+    while scoring_format not in options:
+        scoring_format = input("Input your league scoring format ('standard','PPR', or 'halfPPR'): ")
+        if scoring_format not in options:
+            print("Please input a valid scoring format:")
+    
+    player_1 = input("Who is the first player you would like to compare? ")
+    player_2 = input("Who is the second player you would like to compare? ")
 
     data = fetch_ff_json(week_number)
 
@@ -52,8 +54,8 @@ if __name__ == "__main__":
 
     # Compare fantasy points (convert to float for proper comparison)
     # Assuming there's only one player in each projection list
-    higher_fantasy_player = player_1_projection[0] if float(player_1_projection[0]['fantasyPoints']) > float(player_2_projection[0]['fantasyPoints']) else player_2_projection[0]
+    higher_fantasy_player = player_1_projection[0] if float(player_1_projection[0]['fantasyPointsDefault'][scoring_format]) > float(player_2_projection[0]['fantasyPointsDefault'][scoring_format]) else player_2_projection[0]
 
     # Output the player with higher fantasy points
     print("Player with higher fantasy points:", higher_fantasy_player['longName'])
-    print("Projected stats:", higher_fantasy_player['fantasyPointsDefault'])
+    print("Projected stats:", higher_fantasy_player['fantasyPointsDefault'][scoring_format])
