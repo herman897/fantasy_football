@@ -10,9 +10,10 @@ def fetch_ff_json(week_number):
 
     response = requests.get(url, headers=HEADERS, params=querystring)
 
-    data = response.json()
+    if response.status_code == 200:
+        return response.json().get("body")
 
-    return data
+    raise Exception("Failed to fetch fantasy projections")
 
 
 def filter_players_by_names(players, names_to_find):

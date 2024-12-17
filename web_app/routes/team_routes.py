@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, Blueprint
 from app.team import fetch_team_info, fetch_player_ff
+from app.ff import fetch_ff_json
 from time import time
 import json
 
@@ -27,6 +28,9 @@ def team_form():
 def team_view():
     print("TEAM VIEW...")
     try:
+        week = request.form.get('week', 1)
+        projections: dict = fetch_ff_json(week).get("playerProjections")
+
         # Fetch player details for each input position
         fantasy_team = {}
 
@@ -38,9 +42,7 @@ def team_view():
             print(player)
             team_info = fetch_team_info(player)
             fantasy_team[POSITION_LONG_NAMES.get(position)] = team_info
-            fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'] = fetch_player_ff(team_info['playerID'])
-
-            print(fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'])
+            fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'] = projections.get(team_info['playerID'], {})
             times.append(time() - start)
 
         print(times)

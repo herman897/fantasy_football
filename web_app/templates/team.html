@@ -15,10 +15,10 @@
                 <img src="{{ player.get('espnHeadshot') }}" class="card-img-top" alt="{{ player.get('longName') }}" style="height: 250px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">{{ position }}</h5>
-                    <p class="card-text"><strong>{{ player['longName'] }}</strong></p>
-                    <p class="card-text">Team: {{ player['team'] }}</p>
+                    <p class="card-text"><strong>{{ player.get('longName') }}</strong></p>
+                    <p class="card-text">Team: {{ player.get('team') }}</p>
+                    <p>Projected points: {{ player.get('projections').get('fantasyPointsDefault', {}).get('standard', "Not playing") }}</p>
                 </div>
-                <pre>{{ player['projections'] }}</pre>
                 {% else %}
                 <div class="card-body">
                     <h5 class="card-title">{{ position }}</h5>
