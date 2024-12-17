@@ -18,6 +18,8 @@
                     <p class="card-text"><strong>{{ player.get('longName') }}</strong></p>
                     <p class="card-text">Team: {{ player.get('team') }}</p>
                     <p>Projected points: {{ player.get('projections').get('fantasyPointsDefault', {}).get('standard', "Not playing") }}</p>
+                <!-- Chart Container -->
+                <div id="chart-{{ loop.index }}" style="height: 250px;"></div>
                 </div>
                 {% else %}
                 <div class="card-body">
@@ -30,4 +32,19 @@
         {% endfor %}
     </div>
 </div>
+
+<!-- Plotly.js CDN -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+    {% for position, player in team.items() %}
+    const data_{{loop.index}} = {{player.get("games") | tojson}} 
+
+    Plotly.newPlot('chart-{{loop.index}}', [{
+        x: data_{{loop.index}}.map(x => x[0]),
+        y: data_{{loop.index}}.map(x => x[1].fantasyPointsDefault.standard)
+    }], {
+        title: "Test"
+    })
+    {% endfor %}
+</script>
 {% endblock %}

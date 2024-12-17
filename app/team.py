@@ -21,7 +21,7 @@ def fetch_player(name):
     response = requests.get(url, headers=HEADERS)
 
     if response.status_code == 200:
-        return response.json()
+        return response.json().get("body")
     else:
         raise Exception(f"Error fetching player: {response.text}")
 
@@ -31,19 +31,28 @@ def fetch_team_info(player_name):
     """
     try:
         data = fetch_player(player_name)
-        return data['body'][0]
+        return data[0]
     except Exception as e:
         print(f"Error searching for player: {e}")
         return None
 
-def fetch_player_ff(player_id):
-    url = f"{BASE_URL}/getNFLProjections?playerID={player_id}"
+# def fetch_player_ff(player_id):
+#     url = f"{BASE_URL}/getNFLProjections?playerID={player_id}"
+#     response = requests.get(url, headers=HEADERS)
+
+#     if response.status_code == 200:
+#         return response.json()['body']
+#     else:
+#         raise Exception(f"Error fetching player: {player_id}")
+
+def fetch_player_games(player_id):
+    url = f"{BASE_URL}/getNFLGamesForPlayer?playerID={player_id}&fantasyPoints=true"
     response = requests.get(url, headers=HEADERS)
 
     if response.status_code == 200:
-        return response.json()['body']
+        return response.json().get("body")
     else:
-        raise Exception(f"Error fetching player: {player_id}")
+        raise Exception(f"Error fetching game info for player {player_id}")
 
 if __name__ == "__main__":
     fantasy_team={}
