@@ -24,9 +24,16 @@ pip install -r requirements.txt
 Run the ff report:
 
 ```sh
-#python app/ff.py
-
 python -m app.ff
 ```
+
+##Testing
+
+Run tests:
+
+```sh
+pytest
+```
+
 
 
