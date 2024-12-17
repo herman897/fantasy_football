@@ -1,11 +1,23 @@
 from flask import Flask, request, render_template, Blueprint
-from app.team import fetch_team_info
+from app.team import fetch_team_info, fetch_player_ff
+from time import time
+import json
+
+POSITION_LONG_NAMES = {
+    "QB": "Quarterback",
+    "RB1": "Running Back 1",
+    "RB2": "Running Back 2",
+    "WR1": "Wide Receiver 1",
+    "WR2": "Wide Receiver 2",
+    "TE": "Tight End",
+    "FLEX": "Flex"
+}
 
 # Define the Blueprint
 team_routes = Blueprint("team_route", __name__)
 
 # Team Form Route
-@team_routes.route("/team/form", methods=["GET"])
+@team_routes.route("/team/form")
 def team_form():
     print("TEAM INPUT...")
     return render_template("team_form.html")  # Render the input form
@@ -17,15 +29,30 @@ def team_view():
     try:
         # Fetch player details for each input position
         fantasy_team = {}
-        fantasy_team['Quarterback'] = fetch_team_info(request.form.get("QB"))
-        fantasy_team['Running Back 1'] = fetch_team_info(request.form.get("RB1"))
-        fantasy_team['Running Back 2'] = fetch_team_info(request.form.get("RB2"))
-        fantasy_team['Wide Receiver 1'] = fetch_team_info(request.form.get("WR1"))
-        fantasy_team['Wide Receiver 2'] = fetch_team_info(request.form.get("WR2"))
-        fantasy_team['Tight End'] = fetch_team_info(request.form.get("TE"))
-        fantasy_team['Flex'] = fetch_team_info(request.form.get("FLEX"))
+
+        times = []
+
+        for position in POSITION_LONG_NAMES.keys():
+            start = time()
+            player = request.form.get(position)
+            print(player)
+            team_info = fetch_team_info(player)
+            fantasy_team[POSITION_LONG_NAMES.get(position)] = team_info
+            fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'] = fetch_player_ff(team_info['playerID'])
+
+            print(fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'])
+            times.append(time() - start)
+
+        print(times)
+        print(sum(times) / len(times))
 
         # Pass team data to the display template
-        return render_template("team_display.html", team=fantasy_team)
+        return render_template("team.html", team=fantasy_team)
     except Exception as err:
         print('OOPS', err)
+        return render_template("hello.html")
+    
+# @team_routes.route("/api/ff/player/<id>", methods=["GET"])
+# def ff_player(id):
+#     projections = fetch_player_ff(id)
+#     return json.dumps(projections)

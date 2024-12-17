@@ -12,12 +12,13 @@
         <div class="col-md-4">
             <div class="card h-100 text-center shadow">
                 {% if player %}
-                <img src="{{ player['espnHeadshot'] }}" class="card-img-top" alt="{{ player['longName'] }}" style="height: 250px; object-fit: cover;">
+                <img src="{{ player.get('espnHeadshot') }}" class="card-img-top" alt="{{ player.get('longName') }}" style="height: 250px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">{{ position }}</h5>
                     <p class="card-text"><strong>{{ player['longName'] }}</strong></p>
                     <p class="card-text">Team: {{ player['team'] }}</p>
                 </div>
+                <pre>{{ player['projections'] }}</pre>
                 {% else %}
                 <div class="card-body">
                     <h5 class="card-title">{{ position }}</h5>
