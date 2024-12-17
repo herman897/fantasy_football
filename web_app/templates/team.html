@@ -1,0 +1,33 @@
+{% extends "bootstrap_5_layout.html" %}
+
+{% set active_page = 'team' %} <!-- Highlights the Team Page in the navbar -->
+
+{% block title %}Your Fantasy Team{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Your Fantasy Football Team</h1>
+    <div class="row g-4">
+        {% for position, player in team.items() %}
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow">
+                {% if player %}
+                <img src="{{ player.get('espnHeadshot') }}" class="card-img-top" alt="{{ player.get('longName') }}" style="height: 250px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ position }}</h5>
+                    <p class="card-text"><strong>{{ player['longName'] }}</strong></p>
+                    <p class="card-text">Team: {{ player['team'] }}</p>
+                </div>
+                <pre>{{ player['projections'] }}</pre>
+                {% else %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ position }}</h5>
+                    <p class="text-danger">Player Not Found</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

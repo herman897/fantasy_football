@@ -1,0 +1,50 @@
+{% extends "bootstrap_5_layout.html" %}
+
+{% set active_page = 'team' %} <!-- Highlights the Team Page in the navbar -->
+
+{% block title %}Enter Your Team{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Enter Your Fantasy Football Team</h1>
+    <form method="POST" action="/team/view" class="row g-3">
+        <!-- Quarterback -->
+        <div class="col-md-6">
+            <label for="QB" class="form-label">Quarterback (QB):</label>
+            <input type="text" class="form-control" id="QB" name="QB" placeholder="e.g., Patrick Mahomes" required>
+        </div>
+        <!-- Running Backs -->
+        <div class="col-md-6">
+            <label for="RB1" class="form-label">Running Back 1 (RB1):</label>
+            <input type="text" class="form-control" id="RB1" name="RB1" placeholder="e.g., Derrick Henry" required>
+        </div>
+        <div class="col-md-6">
+            <label for="RB2" class="form-label">Running Back 2 (RB2):</label>
+            <input type="text" class="form-control" id="RB2" name="RB2" placeholder="e.g., Nick Chubb" required>
+        </div>
+        <!-- Wide Receivers -->
+        <div class="col-md-6">
+            <label for="WR1" class="form-label">Wide Receiver 1 (WR1):</label>
+            <input type="text" class="form-control" id="WR1" name="WR1" placeholder="e.g., Justin Jefferson" required>
+        </div>
+        <div class="col-md-6">
+            <label for="WR2" class="form-label">Wide Receiver 2 (WR2):</label>
+            <input type="text" class="form-control" id="WR2" name="WR2" placeholder="e.g., Cooper Kupp" required>
+        </div>
+        <!-- Tight End -->
+        <div class="col-md-6">
+            <label for="TE" class="form-label">Tight End (TE):</label>
+            <input type="text" class="form-control" id="TE" name="TE" placeholder="e.g., Travis Kelce" required>
+        </div>
+        <!-- Flex -->
+        <div class="col-md-6">
+            <label for="FLEX" class="form-label">Flex:</label>
+            <input type="text" class="form-control" id="FLEX" name="FLEX" placeholder="e.g., Austin Ekeler" required>
+        </div>
+        <!-- Submit Button -->
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">View Team</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

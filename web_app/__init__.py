@@ -6,8 +6,7 @@ from dotenv import load_dotenv
 from flask import Flask, flash
 
 from web_app.routes.home_routes import home_routes
-#from web_app.routes.book_routes import book_routes
-#from web_app.routes.weather_routes import weather_routes
+from web_app.routes.team_routes import team_routes
 
 load_dotenv()
 
@@ -19,10 +18,8 @@ def create_app():
     app.config["SECRET_KEY"] = SECRET_KEY
 
     app.register_blueprint(home_routes)
-    #app.register_blueprint(stocks_routes)
-    #app.register_blueprint(unemployment_routes)
-    #app.register_blueprint(product_routes)
-    #app.register_blueprint(weather_routes)
+    app.register_blueprint(team_routes)
+
     return app
 
 if __name__ == "__main__":
