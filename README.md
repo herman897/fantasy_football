@@ -1,4 +1,4 @@
-# fantasy_football
+# Fantasy Football Advisor
 
 Hello! Welcome to our fantasy football app which contains a fantasy football player comparison tool (ff report) and a fantasy football web app.
 
@@ -41,7 +41,8 @@ python -m app.ff
 ```
 
 Run the web app:
-(then view in the browser at http://localhost:5000/ please find instructions on navigating the web app on the home page)
+
+(then view in the browser your [local host](http://127.0.0.1:5000/), please find instructions on navigating the web app on its home page)
 
 ```sh
 flask run
