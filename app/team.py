@@ -15,7 +15,13 @@ from app.tank01_service import BASE_URL,HEADERS
 
 def fetch_player(name):
     """
-    Fetches a singular player
+    Fetches a player and relevant information from the PLayer Info endpoint.
+
+    args:
+        name (str): The player's name
+    
+    Returns:
+        dict: Relevant player info for dashboard (team, picture) and fetches to other endpoints (player ID) 
     """
     url = f"{BASE_URL}/getNFLPlayerInfo?playerName={name}&getStats=true"
     response = requests.get(url, headers=HEADERS)
@@ -48,6 +54,15 @@ def fetch_player(name):
 #         raise Exception(f"Error fetching player: {player_id}")
 
 def fetch_player_games(player_id):
+    """
+    Fetches a player's recent game's using their player ID.
+
+    args:
+        name (str): The player's id
+    
+    Returns:
+        dict: Info on recent games (which includes fantasy scoring for graph) 
+    """
     url = f"{BASE_URL}/getNFLGamesForPlayer?playerID={player_id}&fantasyPoints=true"
     response = requests.get(url, headers=HEADERS)
 

@@ -5,6 +5,15 @@ from app.tank01_service import BASE_URL,HEADERS
 
 
 def fetch_ff_json(week_number):
+    """
+    Fetches a player's fantasy projection for a given week.
+
+    args:
+        name (str): The requested week
+    
+    Returns:
+        dict: All player projections for a given week 
+    """
     url = f"{BASE_URL}/getNFLProjections"
     querystring = {"week":week_number,"archiveSeason":"2024"}
 
