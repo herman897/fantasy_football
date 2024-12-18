@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, Blueprint
-from app.team import fetch_team_info, fetch_player_games
+from app.team import fetch_player, fetch_player_games
 from app.ff import fetch_ff_json
 from time import time
 import datetime
@@ -41,7 +41,7 @@ def team_view():
             start = time()
             player = request.form.get(position)
             print(player)
-            team_info = fetch_team_info(player)
+            team_info = fetch_player(player)
             fantasy_team[POSITION_LONG_NAMES.get(position)] = team_info
             fantasy_team[POSITION_LONG_NAMES.get(position)]['projections'] = projections.get(team_info['playerID'], {})
             times.append(time() - start)

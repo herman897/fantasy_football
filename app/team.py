@@ -21,20 +21,22 @@ def fetch_player(name):
     response = requests.get(url, headers=HEADERS)
 
     if response.status_code == 200:
-        return response.json().get("body")
+        return response.json().get("body")[0]
     else:
         raise Exception(f"Error fetching player: {response.text}")
 
-def fetch_team_info(player_name):
-    """
-    Searches for a player by name and returns their ID, team, and picture.
-    """
-    try:
-        data = fetch_player(player_name)
-        return data[0]
-    except Exception as e:
-        print(f"Error searching for player: {e}")
-        return None
+
+# Consolidated into fetch_player:
+# def fetch_team_info(player_name):
+#     """
+#     Searches for a player by name and returns their ID, team, and picture.
+#     """
+#     try:
+#         data = fetch_player(player_name)
+#         return data[0]
+#     except Exception as e:
+#         print(f"Error searching for player: {e}")
+#         return None
 
 # def fetch_player_ff(player_id):
 #     url = f"{BASE_URL}/getNFLProjections?playerID={player_id}"
