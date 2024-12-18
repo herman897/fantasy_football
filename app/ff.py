@@ -80,7 +80,7 @@ if __name__ == "__main__":
     try:
         # Ensure the lists have at least one player before accessing them
         if not player_1_projection or not player_2_projection:
-            raise IndexError("One of the player projections is empty. Please check the player names.")
+            raise IndexError("One of the player projections is empty. Please check the player names or for bye weeks.")
 
         player_1_points = float(player_1_projection[0]['fantasyPointsDefault'][scoring_format])
         player_2_points = float(player_2_projection[0]['fantasyPointsDefault'][scoring_format])
