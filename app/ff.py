@@ -26,10 +26,23 @@ def fetch_ff_json(week_number):
 
 
 def filter_players_by_names(players, names_to_find):
+    """
+    Filters players by their names.
+
+    Args:
+        players (dict): Dictionary of player projections.
+        names_to_find (list): List of player names to filter by.
+
+    Returns:
+        dict: Filtered players.
+    """
     filtered_players = {}
     for player_id, player_info in players.items():
-        if player_info.get('longName') in names_to_find:
+        # Check if 'longName' exists and matches one of the names
+        if player_info.get('longName') and player_info['longName'] in names_to_find:
             filtered_players[player_id] = player_info
+        elif 'longName' not in player_info:
+            print(f"Warning: Missing 'longName' for player ID {player_id}. Skipping.")
     return filtered_players
 
 
@@ -64,8 +77,19 @@ if __name__ == "__main__":
 
     # Compare fantasy points (convert to float for proper comparison)
     # Assuming there's only one player in each projection list
-    higher_fantasy_player = player_1_projection[0] if float(player_1_projection[0]['fantasyPointsDefault'][scoring_format]) > float(player_2_projection[0]['fantasyPointsDefault'][scoring_format]) else player_2_projection[0]
+    try:
+        # Ensure the lists have at least one player before accessing them
+        if not player_1_projection or not player_2_projection:
+            raise IndexError("One of the player projections is empty. Please check the player names.")
 
-    # Output the player with higher fantasy points
-    print("Player with higher fantasy points:", higher_fantasy_player['longName'])
-    print("Projected stats:", higher_fantasy_player['fantasyPointsDefault'][scoring_format])
+        player_1_points = float(player_1_projection[0]['fantasyPointsDefault'][scoring_format])
+        player_2_points = float(player_2_projection[0]['fantasyPointsDefault'][scoring_format])
+
+        # Determine the player with higher fantasy points
+        higher_fantasy_player = player_1_projection[0] if player_1_points > player_2_points else player_2_projection[0]
+
+        # Output the player with higher fantasy points
+        print("Player with higher fantasy points:", higher_fantasy_player['longName'])
+        print("Projected stats:", higher_fantasy_player['fantasyPointsDefault'][scoring_format])
+    except IndexError as e:
+        print(f"Error: {e}")
