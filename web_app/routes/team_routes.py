@@ -1,3 +1,5 @@
+# this is the "web_app/routes/team_routes.py" file...
+
 from flask import Flask, request, render_template, Blueprint
 from app.team import fetch_player, fetch_player_games
 from app.ff import fetch_ff_json
